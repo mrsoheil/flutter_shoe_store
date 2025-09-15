@@ -20,7 +20,26 @@ class BeginScreen extends StatelessWidget {
               brandListText(),
               brandListLogo(),
               const SizedBox(height: 20),
-              productImage(),
+
+              Container(
+                width: MediaQuery.of(context).size.width * 0.9,
+                height: 280,
+
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: 5,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: productImage(),
+                    );
+                  },
+                ),
+              )
+
+
+
+
             ],
           ),
         ),
@@ -34,43 +53,70 @@ class productImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Container(
-      width: double.infinity,
-      height: 200,
+    return Container(
+      width: 250, // Fixed width for horizontal ListView
+      margin: EdgeInsets.only(left:5),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
       ),
-      padding: const EdgeInsets.all(8.0),
-      child: Container(
-        width: MediaQuery.of(context).size.width * 0.9,
-        decoration: BoxDecoration(
-          color: Color(0xffe7f4ff),
-          borderRadius: BorderRadius.circular(15),
-        ),
-        child: Row(
-          children: [
-            Expanded(
-              child: Image.asset("assets/images/blue2.png"),
+
+      padding: const EdgeInsets.all(10),
+
+      child: Column(
+        children: [
+          Container(
+            width: double.infinity,
+            height: 150,
+            decoration: BoxDecoration(
+              color: Color(0xffe7f4ff),
+              borderRadius: BorderRadius.circular(15),
             ),
-            const SizedBox(width: 12),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                Text("Jordan"),
-                SizedBox(height: 8),
-                Text("\$5"),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(15),
+              child: Image.asset(
+                "assets/images/blue2.png",
+              ),
+            ),
+          ),
+          const SizedBox(height: 8),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Column(
+                  children: [
+                    Text(
+                      "Jordan",
+                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      "\$5",
+                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    IconButton(
+                      style: IconButton.styleFrom(
+                        backgroundColor: Color(0xffe7f4ff),
+                      ),
+                      onPressed: () {},
+                      icon: const Icon(Icons.add, color: Colors.red),
+                    )
+                  ],
+                )
               ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
-
-
     );
   }
 }
+
 
 class topBarSection extends StatelessWidget {
   const topBarSection({super.key});
