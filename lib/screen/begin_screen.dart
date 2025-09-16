@@ -5,6 +5,9 @@ class BeginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+
+
     return SafeArea(
       child: Scaffold(
         backgroundColor: const Color(0xffF5F6FF),
@@ -13,33 +16,29 @@ class BeginScreen extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              topBarSection(),
+              const TopBarSection(),
               const SizedBox(height: 12),
-              searchBarSection(),
+              const SearchBarSection(),
               const SizedBox(height: 20),
-              brandListText(),
-              brandListLogo(),
+              const BrandListText(),
+              const BrandListLogo(),
               const SizedBox(height: 20),
 
-              Container(
+
+              SizedBox(
                 width: MediaQuery.of(context).size.width * 0.9,
                 height: 280,
-
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: 5,
+                  itemCount: productList.length,
                   itemBuilder: (context, index) {
                     return Padding(
                       padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child: productImage(),
+                      child: ProductImage(product: productList[index]),
                     );
                   },
                 ),
               )
-
-
-
-
             ],
           ),
         ),
@@ -48,35 +47,36 @@ class BeginScreen extends StatelessWidget {
   }
 }
 
-class productImage extends StatelessWidget {
-  const productImage({super.key});
+
+
+
+class ProductImage extends StatelessWidget {
+  final Product product;
+
+  const ProductImage({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 250, // Fixed width for horizontal ListView
-      margin: EdgeInsets.only(left:5),
+      width: 250,
+      margin: const EdgeInsets.only(left: 5),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
       ),
-
       padding: const EdgeInsets.all(10),
-
       child: Column(
         children: [
           Container(
             width: double.infinity,
             height: 150,
             decoration: BoxDecoration(
-              color: Color(0xffe7f4ff),
+              color: const Color(0xffe7f4ff),
               borderRadius: BorderRadius.circular(15),
             ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(15),
-              child: Image.asset(
-                "assets/images/blue2.png",
-              ),
+              child: Image.asset(product.imagePath, fit: BoxFit.cover),
             ),
           ),
           const SizedBox(height: 8),
@@ -85,28 +85,27 @@ class productImage extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Column(
+
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Jordan",
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      product.name,
+                      style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      "\$5",
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      product.price,
+                      style: const TextStyle(fontSize: 18, color: Colors.black54),
                     ),
                   ],
                 ),
-                Row(
-                  children: [
-                    IconButton(
-                      style: IconButton.styleFrom(
-                        backgroundColor: Color(0xffe7f4ff),
-                      ),
-                      onPressed: () {},
-                      icon: const Icon(Icons.add, color: Colors.red),
-                    )
-                  ],
+                // دکمه اضافه کردن
+                IconButton(
+                  style: IconButton.styleFrom(
+                    backgroundColor: const Color(0xffe7f4ff),
+                  ),
+                  onPressed: () {},
+                  icon: const Icon(Icons.add, color: Colors.red),
                 )
               ],
             ),
@@ -118,8 +117,9 @@ class productImage extends StatelessWidget {
 }
 
 
-class topBarSection extends StatelessWidget {
-  const topBarSection({super.key});
+
+class TopBarSection extends StatelessWidget {
+  const TopBarSection({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -137,7 +137,6 @@ class topBarSection extends StatelessWidget {
           color: Colors.white,
           child: IconButton(
             onPressed: () {
-              // باز کردن Drawer
               Scaffold.of(context).openDrawer();
             },
             icon: const Icon(Icons.menu),
@@ -148,8 +147,8 @@ class topBarSection extends StatelessWidget {
   }
 }
 
-class searchBarSection extends StatelessWidget {
-  const searchBarSection({super.key});
+class SearchBarSection extends StatelessWidget {
+  const SearchBarSection({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -164,16 +163,11 @@ class searchBarSection extends StatelessWidget {
               fillColor: Colors.white,
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
-                borderSide: const BorderSide(
-                  color: Color(0xffD2D2D2),
-                ),
+                borderSide: const BorderSide(color: Color(0xffD2D2D2)),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(15),
-                borderSide: const BorderSide(
-                  color: Color(0xff2D96FF),
-                  width: 2,
-                ),
+                borderSide: const BorderSide(color: Color(0xff2D96FF), width: 2),
               ),
             ),
           ),
@@ -209,10 +203,7 @@ class MyDrawer extends StatelessWidget {
                     child: Icon(Icons.person, size: 32, color: Colors.blue),
                   ),
                   SizedBox(width: 12),
-                  Text(
-                    "خوش آمدید ",
-                    style: TextStyle(color: Colors.white, fontSize: 18),
-                  ),
+                  Text("خوش آمدید ", style: TextStyle(color: Colors.white, fontSize: 18)),
                 ],
               ),
             ),
@@ -243,31 +234,23 @@ class MyDrawer extends StatelessWidget {
   }
 }
 
-class brandListText extends StatelessWidget {
-  const brandListText({super.key});
+class BrandListText extends StatelessWidget {
+  const BrandListText({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Row(
-      children: [
-        Text(
-          "برندها",
-          style: TextStyle(
-              color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20),
-        ),
+      children: const [
+        Text("برندها", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20)),
         Spacer(),
-        Text(
-          "مشاهده همه",
-          style: TextStyle(
-              color: Colors.blue, fontWeight: FontWeight.bold, fontSize: 14),
-        ),
+        Text("مشاهده همه", style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold, fontSize: 14)),
       ],
     );
   }
 }
 
-class brandListLogo extends StatelessWidget {
-  const brandListLogo({super.key});
+class BrandListLogo extends StatelessWidget {
+  const BrandListLogo({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -275,43 +258,9 @@ class brandListLogo extends StatelessWidget {
       scrollDirection: Axis.horizontal,
       child: Row(
         spacing: 5,
-        children: [
-          Container(
-            width: 65,
-            height: 65,
-            color: Colors.red,
-          ),
-          Container(
-            width: 65,
-            height: 65,
-            color: Colors.red,
-          ),
-          Container(
-            width: 65,
-            height: 65,
-            color: Colors.red,
-          ),
-          Container(
-            width: 65,
-            height: 65,
-            color: Colors.red,
-          ),
-          Container(
-            width: 65,
-            height: 65,
-            color: Colors.red,
-          ),
-          Container(
-            width: 65,
-            height: 65,
-            color: Colors.red,
-          ),
-          Container(
-            width: 65,
-            height: 65,
-            color: Colors.red,
-          ),
-        ],
+        children: List.generate(7, (index) {
+          return Container(width: 65, height: 65, color: Colors.red);
+        }),
       ),
     );
   }
