@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../model/products_model.dart';
+
 class BeginScreen extends StatelessWidget {
   const BeginScreen({super.key});
 
